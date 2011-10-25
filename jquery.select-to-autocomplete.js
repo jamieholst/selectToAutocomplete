@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2011 by Jamie Appleseed at Baymard Institute
+Copyright (C) 2011 by Jamie Appleseed, Baymard Institute (baymard.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,9 @@ THE SOFTWARE.
     'remove-valueless-options': true,
     'copy-attributes-to-text-field': true,
     'autocomplete-plugin': 'jquery_ui',
-    'clear-invalid-input': true,
+    handle_invalid_input: function( context ) {
+      context.$text_field.val( '' );
+    },
     handle_select_field: function( $select_field ) {
       return $select_field.hide();
     },
@@ -153,17 +155,20 @@ THE SOFTWARE.
         if ( option ) {
           context.$select_field.val( option['real-value'] );
         } else {
-          var option_name = context.$text_field.val();
-          var option_value = '';
+          var option_name = context.$text_field.val().toLowerCase();
+          var matching_option = { 'real-value': false };
           for (var i=0; i < context.options.length; i++) {
-            if ( option_name === context.options[i]['label'] ) {
-              option_value = context.options[i]['real-value'];
+            if ( option_name === context.options[i]['label'].toLowerCase() ) {
+              matching_option = context.options[i];
               break;
             }
           };
-          context.$select_field.val( option_value );
-  		    if ( context.settings['clear-invalid-input'] && context.$select_field.val() === '' ) {
-  		      context.$text_field.val( '' );
+          context.$select_field.val( matching_option['real-value'] || '' );
+          if ( matching_option['real-value'] ) {
+            context.$text_field.val( matching_option['label'] );
+          }
+  		    if ( typeof context.settings['handle_invalid_input'] === 'function' && context.$select_field.val() === '' ) {
+  		      context.settings['handle_invalid_input']( context );
   		    }
         }
       }
