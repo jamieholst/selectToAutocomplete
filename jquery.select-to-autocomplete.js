@@ -1,4 +1,6 @@
 /*
+Documentation: http://baymard.com/labs/country-selector#documentation
+
 Copyright (C) 2011 by Jamie Appleseed, Baymard Institute (baymard.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
