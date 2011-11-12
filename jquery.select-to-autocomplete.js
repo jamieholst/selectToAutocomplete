@@ -1,4 +1,6 @@
 /*
+Version: 1.0.1
+
 Documentation: http://baymard.com/labs/country-selector#documentation
 
 Copyright (C) 2011 by Jamie Appleseed, Baymard Institute (baymard.com)
@@ -203,7 +205,7 @@ THE SOFTWARE.
     } else if ( typeof method === 'object' || ! method ) {
       return public_methods.init.apply( this, arguments );
     } else {
-      $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
+      $.error( 'Method ' +  method + ' does not exist on jQuery.fn.selectToAutocomplete' );
     }    
   };
   
