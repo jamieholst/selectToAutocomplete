@@ -1,5 +1,5 @@
 /*
-Version: 1.0.1
+Version: 1.0.2
 
 Documentation: http://baymard.com/labs/country-selector#documentation
 
@@ -180,6 +180,7 @@ THE SOFTWARE.
       context.$text_field.autocomplete({
         'minLength': 0,
         'delay': 0,
+        'autoFocus': true,
         source: function( request, response ) {
           response( filter_options( request.term ) );
         },
