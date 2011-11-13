@@ -1,5 +1,5 @@
 /*
-Version: 1.0.3
+Version: 1.0.4
 
 Documentation: http://baymard.com/labs/country-selector#documentation
 
@@ -64,7 +64,6 @@ THE SOFTWARE.
       var options = [];
       var $options = $select_field.find('option');
       var number_of_options = $options.length;
-      var original_number_of_options = number_of_options;
       
       // go over each option in the select tag
       $options.each(function(){
@@ -74,8 +73,7 @@ THE SOFTWARE.
           'label': $option.text()
         }
         if ( settings['remove-valueless-options'] && option['real-value'] === '') {
-          // remove options without a value
-          number_of_options--;
+          // skip options without a value
         } else {
           // prepare the 'matches' string which must be filtered on later
           option['matches'] = option['label'];
@@ -89,14 +87,14 @@ THE SOFTWARE.
             if ( weight ) {
               option['weight'] = weight;
             } else {
-              option['weight'] = original_number_of_options;
+              option['weight'] = number_of_options;
             }
           }
           // add relevancy score
           if ( settings['relevancy-sorting'] ) {
             option['relevancy-score'] = 0;
             option['relevancy-score-booster'] = 1;
-            var boost_by = parseFloat( $option.attr( settings['relevancy-sorting-booster-attr'] ), 10 );
+            var boost_by = parseFloat( $option.attr( settings['relevancy-sorting-booster-attr'] ) );
             if ( boost_by ) {
               option['relevancy-score-booster'] = boost_by;
             }
@@ -253,4 +251,4 @@ THE SOFTWARE.
     }    
   };
   
-})(jQuery);
+})(jQuery); 
