@@ -33,6 +33,10 @@ THE SOFTWARE.
     'remove-valueless-options': true,
     'copy-attributes-to-text-field': true,
     'autocomplete-plugin': 'jquery_ui',
+    'relevancy-sorting': true,
+    'relevancy-sorting-partial-match-value': 1,
+    'relevancy-sorting-strict-match-value': 5,
+    'relevancy-sorting-booster-attr': 'data-relevancy-booster',
     handle_invalid_input: function( context ) {
       context.$text_field.val( '' );
     },
@@ -88,6 +92,15 @@ THE SOFTWARE.
               option['weight'] = original_number_of_options;
             }
           }
+          // add relevancy score
+          if ( settings['relevancy-sorting'] ) {
+            option['relevancy-score'] = 0;
+            option['relevancy-score-booster'] = 1;
+            var boost_by = parseFloat( $option.attr( settings['relevancy-sorting-booster-attr'] ), 10 );
+            if ( boost_by ) {
+              option['relevancy-score-booster'] = boost_by;
+            }
+          }
           // add option to combined array
           options.push( option );
         }
@@ -140,17 +153,43 @@ THE SOFTWARE.
         var matchers = [];
         for (var i=0; i < split_term.length; i++) {
 				  if ( split_term[i].length > 0 ) {
-				    matchers.push( new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" ) );
+				    var matcher = {};
+				    matcher['partial'] = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+				    if ( context.settings['relevancy-sorting'] ) {
+				      matcher['strict'] = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+			      }
+			      matchers.push( matcher );
 				  }
 				};
 				
 				return $.grep( context.options, function( option ) {
   				var partial_matches = 0;
+  				if ( context.settings['relevancy-sorting'] ) {
+			      var strict_match = false;
+			      var split_option_matches = option.matches.split(' ');
+		      }
   				for ( var i=0; i < matchers.length; i++ ) {
-  				  if ( matchers[i].test( option.matches ) ) {
+  				  if ( matchers[i]['partial'].test( option.matches ) ) {
   				    partial_matches++;
   				  }
+  				  if ( context.settings['relevancy-sorting'] ) {
+  				    for (var q=0; q < split_option_matches.length; q++) {
+  				      if ( matchers[i]['strict'].test( split_option_matches[q] ) ) {
+  				        strict_match = true;
+  				        break;
+  				      }
+  				    };
+				    }
   				};
+  				if ( context.settings['relevancy-sorting'] ) {
+  				  var option_score = 0;
+  				  option_score += partial_matches * context.settings['relevancy-sorting-partial-match-value'];
+  				  if ( strict_match ) {
+  				    option_score += context.settings['relevancy-sorting-strict-match-value'];
+  				  }
+  				  option_score = option_score * option['relevancy-score-booster'];
+  				  option['relevancy-score'] = option_score;
+				  }
   				return (!term || matchers.length === partial_matches );
 				});
       }
@@ -182,7 +221,11 @@ THE SOFTWARE.
         'delay': 0,
         'autoFocus': true,
         source: function( request, response ) {
-          response( filter_options( request.term ) );
+          var filtered_options = filter_options( request.term );
+          if ( context.settings['relevancy-sorting'] ) {
+            filtered_options = filtered_options.sort( function( a, b ) { return b['relevancy-score'] - a['relevancy-score']; } );
+          }
+          response( filtered_options );
         },
         select: function( event, ui ) {
           update_select_value( ui.item );
