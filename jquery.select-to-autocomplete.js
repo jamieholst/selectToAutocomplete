@@ -195,6 +195,7 @@ THE SOFTWARE.
       var update_select_value = function( option ) {
         if ( option ) {
           context.$select_field.val( option['real-value'] );
+          context.$select_field.trigger('change');
         } else {
           var option_name = context.$text_field.val().toLowerCase();
           var matching_option = { 'real-value': false };
