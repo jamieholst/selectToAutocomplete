@@ -212,7 +212,8 @@ THE SOFTWARE.
   		      context.settings['handle_invalid_input']( context );
   		    }
         }
-      }
+	context.$select_field.change(); 
+     }
       // jQuery UI autocomplete settings & behavior
       context.$text_field.autocomplete({
         'minLength': 0,
