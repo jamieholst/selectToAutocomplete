@@ -55,16 +55,16 @@ THE SOFTWARE.
             attrs[key] = raw_attrs[i].nodeValue;
           }
         };
-        $text_field.blur(function() {
-          var valid_values = $select_field.find('option').map(function(i, option) { return $(option).text(); });
-          if ( !($text_field.val() in valid_values) ) {
-            $text_field.val( $select_field.find('option:selected:first').text() );
-          }
-        });
-        return $text_field.attr( attrs )
-          .val( $select_field.find('option:selected:first').text() )
-          .insertAfter( $select_field );
+        $text_field.attr( attrs );
       }
+      $text_field.blur(function() {
+        var valid_values = $select_field.find('option').map(function(i, option) { return $(option).text(); });
+        if ( !($text_field.val() in valid_values) ) {
+          $text_field.val( $select_field.find('option:selected:first').text() );
+        }
+      });
+      return $text_field.val( $select_field.find('option:selected:first').text() )
+        .insertAfter( $select_field );
     },
     extract_options: function( $select_field ) {
       var options = [];
