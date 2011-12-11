@@ -1,5 +1,5 @@
 /*
-Version: 1.0.4
+Version: 1.0.5
 
 Documentation: http://baymard.com/labs/country-selector#documentation
 
@@ -119,27 +119,37 @@ THE SOFTWARE.
   
   var public_methods = {
     init: function( customizations ) {
-      settings = $.extend( settings, customizations );
       
-      return this.each(function(){
-        var $select_field = $(this);
+      if ( $.browser.msie && parseInt($.browser.version, 10) <= 7) {
         
-        var options = settings['extract_options']( $select_field );
-        var $text_field = settings['insert_text_field']( $select_field );
-        settings['handle_select_field']( $select_field );
+        return this;
         
-        var context = {
-          '$select_field': $select_field,
-          '$text_field': $text_field,
-          'options': options,
-          'settings': settings
-        };
-        if ( typeof settings['autocomplete-plugin'] === 'string' ) {
-          adapters[settings['autocomplete-plugin']]( context );
-        } else {
-          settings['autocomplete-plugin']( context );
-        }
-      });
+      } else {
+        
+        settings = $.extend( settings, customizations );
+
+        return this.each(function(){
+          var $select_field = $(this);
+
+          var options = settings['extract_options']( $select_field );
+          var $text_field = settings['insert_text_field']( $select_field );
+          settings['handle_select_field']( $select_field );
+
+          var context = {
+            '$select_field': $select_field,
+            '$text_field': $text_field,
+            'options': options,
+            'settings': settings
+          };
+          if ( typeof settings['autocomplete-plugin'] === 'string' ) {
+            adapters[settings['autocomplete-plugin']]( context );
+          } else {
+            settings['autocomplete-plugin']( context );
+          }
+        });
+        
+      }
+      
     }
   };
   
