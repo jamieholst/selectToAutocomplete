@@ -55,10 +55,10 @@ THE SOFTWARE.
             attrs[key] = raw_attrs[i].nodeValue;
           }
         };
-        return $text_field.attr( attrs )
-          .val( $select_field.find('option:selected:first').text() )
-          .insertAfter( $select_field );
       }
+      return $text_field.attr( attrs )
+        .val( $select_field.find('option:selected:first').text() )
+        .insertAfter( $select_field );
     },
     extract_options: function( $select_field ) {
       var options = [];
