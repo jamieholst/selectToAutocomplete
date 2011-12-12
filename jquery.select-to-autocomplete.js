@@ -160,46 +160,46 @@ THE SOFTWARE.
         var split_term = term.split(' ');
         var matchers = [];
         for (var i=0; i < split_term.length; i++) {
-				  if ( split_term[i].length > 0 ) {
-				    var matcher = {};
-				    matcher['partial'] = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
-				    if ( context.settings['relevancy-sorting'] ) {
-				      matcher['strict'] = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
-			      }
-			      matchers.push( matcher );
-				  }
-				};
-				
-				return $.grep( context.options, function( option ) {
-  				var partial_matches = 0;
-  				if ( context.settings['relevancy-sorting'] ) {
-			      var strict_match = false;
-			      var split_option_matches = option.matches.split(' ');
-		      }
-  				for ( var i=0; i < matchers.length; i++ ) {
-  				  if ( matchers[i]['partial'].test( option.matches ) ) {
-  				    partial_matches++;
-  				  }
-  				  if ( context.settings['relevancy-sorting'] ) {
-  				    for (var q=0; q < split_option_matches.length; q++) {
-  				      if ( matchers[i]['strict'].test( split_option_matches[q] ) ) {
-  				        strict_match = true;
-  				        break;
-  				      }
-  				    };
-				    }
-  				};
-  				if ( context.settings['relevancy-sorting'] ) {
-  				  var option_score = 0;
-  				  option_score += partial_matches * context.settings['relevancy-sorting-partial-match-value'];
-  				  if ( strict_match ) {
-  				    option_score += context.settings['relevancy-sorting-strict-match-value'];
-  				  }
-  				  option_score = option_score * option['relevancy-score-booster'];
-  				  option['relevancy-score'] = option_score;
-				  }
-  				return (!term || matchers.length === partial_matches );
-				});
+          if ( split_term[i].length > 0 ) {
+            var matcher = {};
+            matcher['partial'] = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+            if ( context.settings['relevancy-sorting'] ) {
+              matcher['strict'] = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+            }
+            matchers.push( matcher );
+          }
+        };
+        
+        return $.grep( context.options, function( option ) {
+          var partial_matches = 0;
+          if ( context.settings['relevancy-sorting'] ) {
+            var strict_match = false;
+            var split_option_matches = option.matches.split(' ');
+          }
+          for ( var i=0; i < matchers.length; i++ ) {
+            if ( matchers[i]['partial'].test( option.matches ) ) {
+              partial_matches++;
+            }
+            if ( context.settings['relevancy-sorting'] ) {
+              for (var q=0; q < split_option_matches.length; q++) {
+                if ( matchers[i]['strict'].test( split_option_matches[q] ) ) {
+                  strict_match = true;
+                  break;
+                }
+              };
+            }
+          };
+          if ( context.settings['relevancy-sorting'] ) {
+            var option_score = 0;
+            option_score += partial_matches * context.settings['relevancy-sorting-partial-match-value'];
+            if ( strict_match ) {
+              option_score += context.settings['relevancy-sorting-strict-match-value'];
+            }
+            option_score = option_score * option['relevancy-score-booster'];
+            option['relevancy-score'] = option_score;
+          }
+          return (!term || matchers.length === partial_matches );
+        });
       }
       // update the select field value using either selected option or current input in the text field
       var update_select_value = function( option ) {
@@ -218,12 +218,12 @@ THE SOFTWARE.
           if ( matching_option['real-value'] ) {
             context.$text_field.val( matching_option['label'] );
           }
-  		    if ( typeof context.settings['handle_invalid_input'] === 'function' && context.$select_field.val() === '' ) {
-  		      context.settings['handle_invalid_input']( context );
-  		    }
+          if ( typeof context.settings['handle_invalid_input'] === 'function' && context.$select_field.val() === '' ) {
+            context.settings['handle_invalid_input']( context );
+          }
         }
-	context.$select_field.change(); 
-     }
+        context.$select_field.change(); 
+      }
       // jQuery UI autocomplete settings & behavior
       context.$text_field.autocomplete({
         'minLength': 0,
@@ -238,10 +238,10 @@ THE SOFTWARE.
         },
         select: function( event, ui ) {
           update_select_value( ui.item );
-				},
-				change: function( event, ui ) {
-				  update_select_value( ui.item );
-				}
+        },
+        change: function( event, ui ) {
+          update_select_value( ui.item );
+        }
       });
       // force refresh value of select field when form is submitted
       context.$text_field.parents('form:first').submit(function(){
