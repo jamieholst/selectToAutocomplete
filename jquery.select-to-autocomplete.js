@@ -210,7 +210,10 @@ THE SOFTWARE.
       // update the select field value using either selected option or current input in the text field
       var update_select_value = function( option ) {
         if ( option ) {
-          context.$select_field.val( option['real-value'] );
+          if ( context.$select_field.val() !== option['real-value'] ) {
+            context.$select_field.val( option['real-value'] );
+            context.$select_field.change();
+          }
         } else {
           var option_name = context.$text_field.val().toLowerCase();
           var matching_option = { 'real-value': false };
@@ -220,7 +223,10 @@ THE SOFTWARE.
               break;
             }
           };
-          context.$select_field.val( matching_option['real-value'] || '' );
+          if ( context.$select_field.val() !== matching_option['real-value'] ) {
+            context.$select_field.val( matching_option['real-value'] || '' );
+            context.$select_field.change();
+          }
           if ( matching_option['real-value'] ) {
             context.$text_field.val( matching_option['label'] );
           }
@@ -228,7 +234,6 @@ THE SOFTWARE.
             context.settings['handle_invalid_input']( context );
           }
         }
-        context.$select_field.change(); 
       }
       // jQuery UI autocomplete settings & behavior
       context.$text_field.autocomplete({
