@@ -28,6 +28,7 @@ THE SOFTWARE.
     'sort': false,
     'sort-attr': 'data-priority',
     'sort-desc': false,
+    'autoselect': true,
     'alternative-spellings': true,
     'alternative-spellings-attr': 'data-alternative-spellings',
     'remove-valueless-options': true,
@@ -63,6 +64,12 @@ THE SOFTWARE.
           settings['handle_invalid_input'](context);
         }
       });
+      // give the input box the ability to select all text on mouse click
+      if ( context.settings['autoselect'] ) {
+         $text_field.click( function() {
+             this.select();
+            });
+      }
       return $text_field.val( context.$select_field.find('option:selected:first').text() )
         .insertAfter( context.$select_field );
     },
