@@ -52,8 +52,8 @@ THE SOFTWARE.
         for (var i=0; i < raw_attrs.length; i++) {
           var key = raw_attrs[i].nodeName;
           var value = raw_attrs[i].nodeValue;
-          if ( key !== 'name' && key !== 'id' ) {
-            attrs[key] = raw_attrs[i].nodeValue;
+          if ( key !== 'name' && key !== 'id' && typeof context.$select_field.attr(key) !== 'undefined' ) {
+            attrs[key] = value;
           }
         };
         $text_field.attr( attrs );
@@ -133,7 +133,7 @@ THE SOFTWARE.
   var public_methods = {
     init: function( customizations ) {
       
-      if ( $.browser.msie && parseInt($.browser.version, 10) <= 7) {
+      if ( $.browser.msie && parseInt($.browser.version, 10) <= 6) {
         
         return this;
         
