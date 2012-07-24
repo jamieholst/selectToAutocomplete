@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 (function($){
   var settings = {
-    'sort': false,
+    'sort': false, 
     'sort-attr': 'data-priority',
     'sort-desc': false,
     'autoselect': true,
@@ -38,14 +38,16 @@ THE SOFTWARE.
     'relevancy-sorting-partial-match-value': 1,
     'relevancy-sorting-strict-match-value': 5,
     'relevancy-sorting-booster-attr': 'data-relevancy-booster',
+	'allow-free-text-entry': true,
     handle_invalid_input: function( context ) {
-      context.$text_field.val( context.$select_field.find('option:selected:first').text() );
+      if(!settings['allow-free-text-entry'])
+		context.$text_field.val( context.$select_field.find('option:selected:first').text() );
     },
     handle_select_field: function( $select_field ) {
       return $select_field.hide();
     },
     insert_text_field: function( context ) {
-      var $text_field = $( "<input></input>" );
+      var $text_field = $( "<input />" ).attr('name', context.$select_field.attr('name') + '-text');
       if ( settings['copy-attributes-to-text-field'] ) {
         var attrs = {};
         var raw_attrs = context.$select_field[0].attributes;
