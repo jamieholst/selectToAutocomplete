@@ -23,7 +23,7 @@ You can use this package on the client side, as a jQuery plugin, or on the serve
 
 On the client side it modifies the default select widget. On the server side it generates HTML for the complete exhaustive country list compatible with the requirements of the client, including specialized attributes. 
 
-To use on the server side do 'npm install nodejs.countrylist.js'. Then in your node module:
+To use on the server side under Node.js copy nodejs.countrylist.js into your require path. Then in your node module:
 
 ````
 var lib = require("./nodejs.countryList.js");
