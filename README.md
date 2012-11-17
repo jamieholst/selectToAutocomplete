@@ -1,4 +1,4 @@
-Select To Autocomplete: Redesigned Country Selector
+#Select To Autocomplete: Redesigned Country Selector
 
 An improved way to select a country in web forms.
 
@@ -17,7 +17,7 @@ http://uxdesign.smashingmagazine.com/2011/11/10/redesigning-the-country-selector
 - Try the demo
 http://baymard.com/labs/country-selector
 
-== Usage
+##Usage
 
 You can use this package on the client side, as a jQuery plugin, or on the server side, as a Node.js package.
 
