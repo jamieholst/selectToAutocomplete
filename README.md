@@ -23,7 +23,7 @@ You can use this package on the client side, as a jQuery plugin, or on the serve
 
 On the client side it modifies the default select widget. On the server side it generates HTML for the complete exhaustive country list compatible with the requirements of the client, including specialized attributes. 
 
-In addition to this package you'll need jQuery, a jquery autocomplete plugin, and CSS to style the HTML for the country selector. See sample.html.
+In addition to this package you'll need jQuery, a jquery autocomplete plugin, and CSS to style the HTML for the country selector. See sample.html to get started. You might also find test.nodjs.countryList.js a helpful example.
 
 To use on the server side do 'npm install nodejs.countrylist.js'. Then in your node module:
 
