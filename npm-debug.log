@@ -1,0 +1,99 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'publish' ]
+2 info using npm@1.1.33
+3 info using node@v0.8.1
+4 verbose config file /Users/herokudev/.npmrc
+5 verbose config file /usr/local/etc/npmrc
+6 verbose config file /usr/local/lib/node_modules/npm/npmrc
+7 verbose publish [ '.' ]
+8 verbose read json /Users/herokudev/src/selectToAutocomplete/package.json
+9 verbose cache add [ '.', null ]
+10 silly cache add name=undefined spec="." args=[".",null]
+11 verbose parsed url { pathname: '.', path: '.', href: '.' }
+12 verbose lock . /Users/herokudev/.npm/3a52ce780950d4d969792a2559cd519d7ee8c727--.lock
+13 verbose read json package.json
+14 verbose tar pack [ '/var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/tmp.tgz',
+14 verbose tar pack   '.' ]
+15 verbose tarball /var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/tmp.tgz
+16 verbose folder .
+17 info prepublish selectToAutocomplete@1.1.0
+18 verbose tar unpack /var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/tmp.tgz
+19 silly gunzTarPerm modes [ '755', '644' ]
+20 silly gunzTarPerm extractEntry package.json
+21 silly gunzTarPerm extractEntry README.md
+22 silly gunzTarPerm extractEntry jquery-ui-autocomplete.js
+23 silly gunzTarPerm extractEntry jquery.js
+24 silly gunzTarPerm extractEntry jquery.select-to-autocomplete.js
+25 silly gunzTarPerm extractEntry jquery.select-to-autocomplete.min.js
+26 silly gunzTarPerm extractEntry nodejs.countryList.js
+27 silly gunzTarPerm extractEntry test.nodejs.countryList.js
+28 silly gunzTarPerm extractEntry sample.html
+29 verbose read json /var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/package/package.json
+30 verbose from cache /var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/package/package.json
+31 verbose tar pack [ '/Users/herokudev/.npm/selectToAutocomplete/1.1.0/package.tgz',
+31 verbose tar pack   '/var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/package' ]
+32 verbose tarball /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package.tgz
+33 verbose folder /var/folders/td/qzgzxj9j1jbbz65rj70ttvmm0000gr/T/npm-31409/1356131920483-0.245614716084674/package
+34 verbose tar unpack /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package.tgz
+35 silly gunzTarPerm modes [ '755', '644' ]
+36 silly gunzTarPerm extractEntry package.json
+37 silly gunzTarPerm extractEntry README.md
+38 silly gunzTarPerm extractEntry jquery-ui-autocomplete.js
+39 silly gunzTarPerm extractEntry jquery.js
+40 silly gunzTarPerm extractEntry jquery.select-to-autocomplete.js
+41 silly gunzTarPerm extractEntry jquery.select-to-autocomplete.min.js
+42 silly gunzTarPerm extractEntry nodejs.countryList.js
+43 silly gunzTarPerm extractEntry test.nodejs.countryList.js
+44 silly gunzTarPerm extractEntry sample.html
+45 verbose read json /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package/package.json
+46 silly shasum updated bytes 40960
+47 silly shasum updated bytes 13592
+48 info shasum 337bec1cb20d3935276f7576a2b10181ebfe4940
+48 info shasum /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package.tgz
+49 verbose from cache /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package/package.json
+50 verbose chmod /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package.tgz 644
+51 verbose chown /Users/herokudev/.npm/selectToAutocomplete/1.1.0/package.tgz [ 504, 20 ]
+52 silly publish { name: 'selectToAutocomplete',
+52 silly publish   version: '1.1.0',
+52 silly publish   description: 'Generate an exhaustive list of countries that is compatible with the selectToAutocomplete front end JS.',
+52 silly publish   main: 'nodejs.countryList.js',
+52 silly publish   scripts: { test: 'node test.nodejs.countryList.js' },
+52 silly publish   repository:
+52 silly publish    { type: 'git',
+52 silly publish      url: 'https://github.com/lucasgonze/selectToAutocomplete.git' },
+52 silly publish   keywords: [ 'UX', 'HTML' ],
+52 silly publish   author: { name: 'Jamie Appleseed, Lucas Gonze' },
+52 silly publish   license: 'BSD',
+52 silly publish   readme: '#Select To Autocomplete: Redesigned Country Selector\n\nAn improved way to select a country in web forms.\n\n* Design improves upon a standard country dropdown list.\n* Accepts keyboard typing input.\n* Autocomplete from a list of synonyms.\n* Handles typos.\n* Prioritizes autocomplete results.\n\nThe solution is a redesigned country selector that addresses the issues of drop-down country selectors. It handles typos, various spelling sequences, synonyms and prioritized options.\nThe technically correct term for this would be something like an “auto-complete text field with loose partial matching, synonyms and weighted results.” That’s a bit long, so I’ve simply dubbed it the “Redesigned Country Selector”.\n\n- Read the article Redesigning The Country Selector by Christian Holst from Smashing Magazine\nhttp://uxdesign.smashingmagazine.com/2011/11/10/redesigning-the-country-selector/\n\n- Try the demo\nhttp://baymard.com/labs/country-selector\n\n##Usage\n\nYou can use this package on the client side, as a jQuery plugin, or on the server side, as a Node.js package.\n\nOn the client side it modifies the default select widget. On the server side it generates HTML for the complete exhaustive country list compatible with the requirements of the client, including specialized attributes. \n\nIn addition to this package you\'ll need jQuery, a jquery autocomplete plugin, and CSS to style the HTML for the country selector. See sample.html to get started. You might also find test.nodjs.countryList.js a helpful example.\n\nTo use on the server side do \'npm install nodejs.countrylist.js\'. Then in your node module:\n\n````\nvar lib = require("./nodejs.countryList.js");\nvar defaultCountry = \'Vanuatu\';\nvar cl = lib.countryList(defaultCountry);\n// insert the HTML you have generated into your template\nres.render(\'template.html\', { placeholderInHTML: cl } ); \n````\n\n\n',
+52 silly publish   _id: 'selectToAutocomplete@1.1.0',
+52 silly publish   dist: { shasum: '337bec1cb20d3935276f7576a2b10181ebfe4940' } }
+53 verbose url raw selectToAutocomplete
+54 verbose url resolving [ 'https://registry.npmjs.org/', './selectToAutocomplete' ]
+55 verbose url resolved https://registry.npmjs.org/selectToAutocomplete
+56 info retry registry request attempt 1 at 15:18:40
+57 http PUT https://registry.npmjs.org/selectToAutocomplete
+58 http 403 https://registry.npmjs.org/selectToAutocomplete
+59 error publish Failed PUT response 403
+60 error Error: forbidden New packages must have all-lowercase names: selectToAutocomplete
+60 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:211:14)
+60 error     at Request.init.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/main.js:119:22)
+60 error     at Request.EventEmitter.emit (events.js:91:17)
+60 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/main.js:521:16)
+60 error     at Request.EventEmitter.emit (events.js:88:17)
+60 error     at IncomingMessage.Request.start.self.req.self.httpModule.request.buffer (/usr/local/lib/node_modules/npm/node_modules/request/main.js:483:14)
+60 error     at IncomingMessage.EventEmitter.emit (events.js:115:20)
+60 error     at IncomingMessage._emitEnd (http.js:366:10)
+60 error     at HTTPParser.parserOnMessageComplete [as onMessageComplete] (http.js:149:23)
+60 error     at CleartextStream.socketOnData [as ondata] (http.js:1356:20)
+60 error  [Error: forbidden New packages must have all-lowercase names: selectToAutocomplete]
+61 error You may report this log at:
+61 error     <http://github.com/isaacs/npm/issues>
+61 error or email it to:
+61 error     <npm-@googlegroups.com>
+62 error System Darwin 11.4.2
+63 error command "node" "/usr/local/bin/npm" "publish"
+64 error cwd /Users/herokudev/src/selectToAutocomplete
+65 error node -v v0.8.1
+66 error npm -v 1.1.33
+67 error message forbidden New packages must have all-lowercase names: selectToAutocomplete
+68 verbose exit [ 1, true ]
