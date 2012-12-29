@@ -19,9 +19,21 @@ if( ! cl.match(/<option value="" selected="selected">Select Country<\/option>/))
 	process.exit(1);	
 }
 
-var cl = lib.countryList('Vanuatu');
+cl = lib.countryList('Vanuatu');
 if( ! cl.match(/<option value="Vanuatu" selected  data-alternative-spellings="VU" >Vanuatu<\/option>/)){
 	console.log("Fail: setting default selection did not work");
+	process.exit(1);	
+}
+
+var gotEx = false;
+try {
+	cl = lib.countryList('Vanuatu','no such locale');
+} catch(ex){
+	console.log("Success: setting invalid locale did throw exception",ex);
+	gotEx = true;
+}
+if( !gotEx ){
+	console.log("Fail: setting invalid locale did not throw exception");
 	process.exit(1);	
 }
 
