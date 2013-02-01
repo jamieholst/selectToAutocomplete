@@ -5,17 +5,20 @@ exports.countryList = function(selectedElementName,locale){
 	
 	if( typeof locale !== "string" )
 		locale = "en-US";
-		
-	// country-list/country/icu/en/country.json
-	// fixme: if third character is hyphen, make it underscore.
-	
-	var raw = require("./country-list/country/icu/"+locale.replace('-','_')+"/country.json");
-	/* If the locale really exists, it will be found. If it's not found an exception will be thrown by node:
-	Error: Cannot find module './country-list/country/icu/BOGUS-LOCALE/country.json'
-	So I don't check for error return.	
+
+	/* A note on error checking for this require(): if the locale really exists, it will be found. 
+	   If it's not found an exception will be thrown by node:
+	   Error: Cannot find module './country-list/country/icu/BOGUS-LOCALE/country.json'
+       So I don't check for error return.	
 	*/
+		
+	var raw = require("./country-list/country/icu/"+locale.replace('-','_')+"/country.json");
 	var json = [];
 	for (var key in raw) {
+		/* In this loop we convert from the internal data format needed by 
+		   the country-list package to the internal data format needed by 
+		   the select-to-autocomplete package 
+		*/
 	    if (key === 'length' || !raw.hasOwnProperty(key)) continue;
 	    var value = raw[key];
 		json.push({name:value,"data-alternative-spellings":key});
