@@ -9,7 +9,7 @@ if( typeof cl != 'string' ){
 	process.exit(1);
 }
 
-if( ! cl.match(/(<option value="Pakistan" data-alternative-spellings="PK پاکستان"  data-relevancy-booster="2" >Pakistan<\/option>)/) ){
+if( ! cl.match(/(<option value="Serbia and Montenegro" data-alternative-spellings="CS" >)/) ){
 	console.log("Fail: test country not in list, or alternative spellings or relevancy booster not set.");
 	process.exit(1);
 }
@@ -34,6 +34,12 @@ try {
 }
 if( !gotEx ){
 	console.log("Fail: setting invalid locale did not throw exception");
+	process.exit(1);	
+}
+
+cl = lib.countryList(null,"ru-UA"); // will throw exception if missing
+if( ! cl.match(/<option value="Эфиопия" data-alternative-spellings="ET" >Эфиопия<\/option>/)){
+	console.log("Fail: setting default selection did not work");
 	process.exit(1);	
 }
 

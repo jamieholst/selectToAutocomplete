@@ -1,13 +1,25 @@
 
 var allLocales = {};
-allLocales.us_en = require("./locales/us-en.js");
 
 exports.countryList = function(selectedElementName,locale){
 	
 	if( typeof locale !== "string" )
-		locale = "us-en";
-	var obj = require("./locales/"+locale+".js");
-	var json = obj.value;
+		locale = "en-US";
+		
+	// country-list/country/icu/en/country.json
+	// fixme: if third character is hyphen, make it underscore.
+	
+	var raw = require("./country-list/country/icu/"+locale.replace('-','_')+"/country.json");
+	/* If the locale really exists, it will be found. If it's not found an exception will be thrown by node:
+	Error: Cannot find module './country-list/country/icu/BOGUS-LOCALE/country.json'
+	So I don't check for error return.	
+	*/
+	var json = [];
+	for (var key in raw) {
+	    if (key === 'length' || !raw.hasOwnProperty(key)) continue;
+	    var value = raw[key];
+		json.push({name:value,"data-alternative-spellings":key});
+	}
 	
 	var html = "";
 	
