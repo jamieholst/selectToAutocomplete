@@ -45,7 +45,7 @@ THE SOFTWARE.
       return $select_field.hide();
     },
     insert_text_field: function( context ) {
-      var $text_field = $( "<input></input>" );
+      var $text_field = $( '<input type="text"></input>' );
       if ( settings['copy-attributes-to-text-field'] ) {
         var attrs = {};
         var raw_attrs = context.$select_field[0].attributes;
@@ -77,7 +77,7 @@ THE SOFTWARE.
       var options = [];
       var $options = $select_field.find('option');
       var number_of_options = $options.length;
-      
+
       // go over each option in the select tag
       $options.each(function(){
         var $option = $(this);
@@ -124,26 +124,26 @@ THE SOFTWARE.
           options.sort( function( a, b ) { return a['weight'] - b['weight']; } );
         }
       }
-      
+
       // return the set of options, each with the following attributes: real-value, label, matches, weight (optional)
       return options;
     }
   };
-  
+
   var public_methods = {
     init: function( customizations ) {
-      
+
       if ( $.browser.msie && parseInt($.browser.version, 10) <= 6) {
-        
+
         return this;
-        
+
       } else {
-        
+
         settings = $.extend( settings, customizations );
 
         return this.each(function(){
           var $select_field = $(this);
-          
+
           var context = {
             '$select_field': $select_field,
             'options': settings['extract_options']( $select_field ),
@@ -151,21 +151,21 @@ THE SOFTWARE.
           };
 
           context['$text_field'] = settings['insert_text_field']( context );
-          
+
           settings['handle_select_field']( $select_field );
-          
+
           if ( typeof settings['autocomplete-plugin'] === 'string' ) {
             adapters[settings['autocomplete-plugin']]( context );
           } else {
             settings['autocomplete-plugin']( context );
           }
         });
-        
+
       }
-      
+
     }
   };
-  
+
   var adapters = {
     jquery_ui: function( context ) {
       // loose matching of search terms
@@ -182,7 +182,7 @@ THE SOFTWARE.
             matchers.push( matcher );
           }
         };
-        
+
         return $.grep( context.options, function( option ) {
           var partial_matches = 0;
           if ( context.settings['relevancy-sorting'] ) {
@@ -277,7 +277,7 @@ THE SOFTWARE.
       return public_methods.init.apply( this, arguments );
     } else {
       $.error( 'Method ' +  method + ' does not exist on jQuery.fn.selectToAutocomplete' );
-    }    
+    }
   };
-  
-})(jQuery); 
+
+})(jQuery);
