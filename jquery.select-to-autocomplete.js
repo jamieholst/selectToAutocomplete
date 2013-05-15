@@ -60,7 +60,7 @@ THE SOFTWARE.
       }
       $text_field.blur(function() {
         var valid_values = context.$select_field.find('option').map(function(i, option) { return $(option).text(); });
-        if ( !($text_field.val() in valid_values) && typeof settings['handle_invalid_input'] === 'function' ) {
+        if ( ($.inArray($text_field.val(), valid_values) < 0) && typeof settings['handle_invalid_input'] === 'function' ) {
           settings['handle_invalid_input'](context);
         }
       });
