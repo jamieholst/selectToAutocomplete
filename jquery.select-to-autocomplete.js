@@ -133,7 +133,7 @@ THE SOFTWARE.
   var public_methods = {
     init: function( customizations ) {
       
-      if ( $.browser.msie && parseInt($.browser.version, 10) <= 6) {
+      if ( /msie/.test(navigator.userAgent.toLowerCase()) && parseInt(navigator.appVersion,10) <= 6) {
         
         return this;
         
