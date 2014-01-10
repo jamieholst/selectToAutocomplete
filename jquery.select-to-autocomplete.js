@@ -133,7 +133,7 @@ THE SOFTWARE.
   var public_methods = {
     init: function( customizations ) {
       
-      if ( $.browser.msie && parseInt($.browser.version, 10) <= 6) {
+      if ( $.browser && $.browser.msie && parseInt($.browser.version, 10) <= 6) {
         
         return this;
         
