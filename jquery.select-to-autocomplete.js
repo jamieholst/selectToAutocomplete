@@ -133,7 +133,7 @@ THE SOFTWARE.
   var public_methods = {
     init: function( customizations ) {
       
-      if ( $.browser.msie && parseInt($.browser.version, 10) <= 6) {
+      if ( $.browser && $.browser.msie && parseInt($.browser.version, 10) <= 6) {
         
         return this;
         
@@ -250,7 +250,13 @@ THE SOFTWARE.
         source: function( request, response ) {
           var filtered_options = filter_options( request.term );
           if ( context.settings['relevancy-sorting'] ) {
-            filtered_options = filtered_options.sort( function( a, b ) { return b['relevancy-score'] - a['relevancy-score']; } );
+            filtered_options = filtered_options.sort( function( a, b ) { 
+            	if (b['relevancy-score'] == a['relevancy-score']) {
+            		return b['label'] < a['label'] ? 1 : -1;	
+            	} else {
+            		return b['relevancy-score'] - a['relevancy-score']; 
+            	}
+            } );
           }
           response( filtered_options );
         },
