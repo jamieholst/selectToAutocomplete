@@ -1,0 +1,19 @@
+{
+  "name": "country-selector",
+  "version": "1.1.0",
+  "description": "Generate an exhaustive list of countries that is compatible with the selectToAutocomplete front end JS.",
+  "main": "nodejs.countryList.js",
+  "scripts": {
+    "test": "node test.nodejs.countryList.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucasgonze/selectToAutocomplete.git"
+  },
+  "keywords": [
+    "UX",
+    "HTML"
+  ],
+  "author": "Jamie Appleseed, Lucas Gonze",
+  "license": "BSD"
+}
