@@ -1,5 +1,5 @@
 /*
-Version: 1.0.7
+Version: 1.0.8
 
 Documentation: http://baymard.com/labs/country-selector#documentation
 
