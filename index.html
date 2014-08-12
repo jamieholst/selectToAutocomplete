@@ -3,10 +3,10 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Select to Autocomplete</title>
-	<script src="jquery.js"></script>
-	<script src="jquery-ui-autocomplete.js"></script>
+	<script src="jquery-1.11.1.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
 	<script src="jquery.select-to-autocomplete.js"></script>
-	<script type="text/javascript" charset="utf-8">
+	<script>
 	  (function($){
 	    $(function(){
 	      $('select').selectToAutocomplete();
@@ -17,7 +17,8 @@
 	    });
 	  })(jQuery);
 	</script>
-	<style type="text/css" media="screen">
+	<link rel="stylesheet" href="jquery-ui.css">
+	<style>
 	  body {
 	    font-family: Arial, Verdana, sans-serif;
 	    font-size: 13px;
@@ -29,19 +30,19 @@
       width: 218px;
       border: 1px solid #B0BECA;
       max-height: 350px;
-      overflow-y: scroll;
+      overflow-x: hidden;
     }
-    .ui-autocomplete .ui-menu-item a {
+    .ui-autocomplete .ui-menu-item {
       border-top: 1px solid #B0BECA;
       display: block;
       padding: 4px 6px;
       color: #353D44;
       cursor: pointer;
     }
-    .ui-autocomplete .ui-menu-item:first-child a {
+    .ui-autocomplete .ui-menu-item:first-child {
       border-top: none;
     }
-    .ui-autocomplete .ui-menu-item a.ui-state-hover {
+    .ui-autocomplete .ui-menu-item.ui-state-focus {
       background-color: #D5E5F4;
       color: #161A1C;
     }
