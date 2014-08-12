@@ -1,5 +1,5 @@
 /*
-Version: 1.0.5
+Version: 1.0.6
 
 Documentation: http://baymard.com/labs/country-selector#documentation
 
@@ -39,13 +39,17 @@ THE SOFTWARE.
     'relevancy-sorting-strict-match-value': 5,
     'relevancy-sorting-booster-attr': 'data-relevancy-booster',
     handle_invalid_input: function( context ) {
-      context.$text_field.val( context.$select_field.find('option:selected:first').text() );
+      var selected_finder = 'option:selected:first';
+      if ( context.settings['remove-valueless-options'] ) {
+        selected_finder = 'option:selected[value!=]:first';
+      }
+      context.$text_field.val( context.$select_field.find( selected_finder ).text() );
     },
     handle_select_field: function( $select_field ) {
       return $select_field.hide();
     },
     insert_text_field: function( context ) {
-      var $text_field = $( "<input></input>" );
+      var $text_field = $( '<input type="text"></input>' );
       if ( settings['copy-attributes-to-text-field'] ) {
         var attrs = {};
         var raw_attrs = context.$select_field[0].attributes;
@@ -70,7 +74,11 @@ THE SOFTWARE.
              this.select();
             });
       }
-      return $text_field.val( context.$select_field.find('option:selected:first').text() )
+      var selected_finder = 'option:selected:first';
+      if ( context.settings['remove-valueless-options'] ) {
+        selected_finder = 'option:selected[value!=]:first';
+      }
+      return $text_field.val( context.$select_field.find( selected_finder ).text() )
         .insertAfter( context.$select_field );
     },
     extract_options: function( $select_field ) {
