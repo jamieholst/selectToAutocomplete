@@ -1,5 +1,5 @@
 /*
-Version: 1.0.8
+Version: 1.0.9
 
 Documentation: http://baymard.com/labs/country-selector#documentation
 
@@ -38,6 +38,9 @@ THE SOFTWARE.
     'relevancy-sorting-partial-match-value': 1,
     'relevancy-sorting-strict-match-value': 5,
     'relevancy-sorting-booster-attr': 'data-relevancy-booster',
+    'minLength': 0,
+	  'delay': 0,
+    'autoFocus': true,
     handle_invalid_input: function( context ) {
       var selected_finder = 'option:selected:first';
       if ( context.settings['remove-valueless-options'] ) {
@@ -252,9 +255,9 @@ THE SOFTWARE.
       }
       // jQuery UI autocomplete settings & behavior
       context.$text_field.autocomplete({
-        'minLength': 0,
-        'delay': 0,
-        'autoFocus': true,
+        'minLength': context.settings['minLength'],
+        'delay': context.settings['delay'],
+        'autoFocus': context.settings['autoFocus'],
         source: function( request, response ) {
           var filtered_options = filter_options( request.term );
           if ( context.settings['relevancy-sorting'] ) {
