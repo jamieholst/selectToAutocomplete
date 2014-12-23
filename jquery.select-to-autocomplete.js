@@ -57,8 +57,8 @@ THE SOFTWARE.
         var attrs = {};
         var raw_attrs = context.$select_field[0].attributes;
         for (var i=0; i < raw_attrs.length; i++) {
-          var key = raw_attrs[i].nodeName;
-          var value = raw_attrs[i].nodeValue;
+          var key = raw_attrs[i].name;
+          var value = raw_attrs[i].value;
           if ( key !== 'name' && key !== 'id' && typeof context.$select_field.attr(key) !== 'undefined' ) {
             attrs[key] = value;
           }
