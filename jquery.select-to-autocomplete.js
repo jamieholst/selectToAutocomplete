@@ -143,8 +143,9 @@ THE SOFTWARE.
   
   var public_methods = {
     init: function( customizations ) {
-      
-      if ( /msie/.test(navigator.userAgent.toLowerCase()) && parseInt(navigator.appVersion,10) <= 6) {
+        var userAgent = navigator.userAgent.toLowerCase();
+
+        if ( /msie/.test(userAgent) && parseFloat((userAgent.match(/.*(?:rv|ie)[\/: ](.+?)([ \);]|$)/) || [])[1]) <= 6) {
         
         return this;
         
