@@ -186,9 +186,11 @@ THE SOFTWARE.
         for (var i=0; i < split_term.length; i++) {
           if ( split_term[i].length > 0 ) {
             var matcher = {};
-            matcher['partial'] = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+            var partial = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+            matcher['partial'] = partial.test.bind(partial);
             if ( context.settings['relevancy-sorting'] ) {
-              matcher['strict'] = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+              var strict = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+              matcher['strict'] = strict.test.bind(strict);
             }
             matchers.push( matcher );
           }
@@ -201,12 +203,12 @@ THE SOFTWARE.
             var split_option_matches = option.matches.split(' ');
           }
           for ( var i=0; i < matchers.length; i++ ) {
-            if ( matchers[i]['partial'].test( option.matches ) ) {
+            if ( matchers[i]['partial']( option.matches ) ) {
               partial_matches++;
             }
             if ( context.settings['relevancy-sorting'] ) {
               for (var q=0; q < split_option_matches.length; q++) {
-                if ( matchers[i]['strict'].test( split_option_matches[q] ) ) {
+                if ( matchers[i]['strict']( split_option_matches[q] ) ) {
                   strict_match = true;
                   break;
                 }
