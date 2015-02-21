@@ -41,6 +41,8 @@ THE SOFTWARE.
     'minLength': 0,
 	  'delay': 0,
     'autoFocus': true,
+    'locale': 'en',
+    'sensitivity': 'base',
     handle_invalid_input: function( context ) {
       var selected_finder = 'option:selected:first';
       if ( context.settings['remove-valueless-options'] ) {
@@ -179,6 +181,31 @@ THE SOFTWARE.
   
   var adapters = {
     jquery_ui: function( context ) {
+      function create_str_contains(term) {
+        var locale = context.settings['locale'];
+        var sensitivity = context.settings['sensitivity'];
+        var collator = Intl.Collator(locale, {'sensitivity': sensitivity});
+        return function (haystack) {
+          for (var i = 0; i < 1 + haystack.length - term.length; i++) {
+            var first_part = haystack.slice(i, i + term.length);
+            if (collator.compare(first_part, term) === 0) {
+              return true;
+            }
+          }
+          return false;
+        };
+      }
+
+      function create_str_startswith(term) {
+        var locale = context.settings['locale'];
+        var sensitivity = context.settings['sensitivity'];
+        var collator = Intl.Collator(locale, {'sensitivity': sensitivity});
+        return function (haystack) {
+          var first_part = haystack.slice(0, term.length);
+          return collator.compare(first_part, term) === 0;
+        };
+      }
+
       // loose matching of search terms
       var filter_options = function( term ) {
         var split_term = term.split(' ');
@@ -186,9 +213,9 @@ THE SOFTWARE.
         for (var i=0; i < split_term.length; i++) {
           if ( split_term[i].length > 0 ) {
             var matcher = {};
-            matcher['partial'] = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+            matcher['partial'] = create_str_contains( split_term[i] );
             if ( context.settings['relevancy-sorting'] ) {
-              matcher['strict'] = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
+              matcher['strict'] = create_str_startswith( split_term[i] );
             }
             matchers.push( matcher );
           }
@@ -201,12 +228,12 @@ THE SOFTWARE.
             var split_option_matches = option.matches.split(' ');
           }
           for ( var i=0; i < matchers.length; i++ ) {
-            if ( matchers[i]['partial'].test( option.matches ) ) {
+            if ( matchers[i]['partial']( option.matches ) ) {
               partial_matches++;
             }
             if ( context.settings['relevancy-sorting'] ) {
               for (var q=0; q < split_option_matches.length; q++) {
-                if ( matchers[i]['strict'].test( split_option_matches[q] ) ) {
+                if ( matchers[i]['strict']( split_option_matches[q] ) ) {
                   strict_match = true;
                   break;
                 }
