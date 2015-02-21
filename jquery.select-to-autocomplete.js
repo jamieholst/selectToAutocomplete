@@ -41,6 +41,8 @@ THE SOFTWARE.
     'minLength': 0,
 	  'delay': 0,
     'autoFocus': true,
+    'locale': 'en',
+    'sensitivity': 'base',
     handle_invalid_input: function( context ) {
       var selected_finder = 'option:selected:first';
       if ( context.settings['remove-valueless-options'] ) {
@@ -180,13 +182,28 @@ THE SOFTWARE.
   var adapters = {
     jquery_ui: function( context ) {
       function create_str_contains(term) {
-        var partial = new RegExp( $.ui.autocomplete.escapeRegex( term ), "i" );
-        return partial.test.bind(partial);
+        var locale = context.settings['locale'];
+        var sensitivity = context.settings['sensitivity'];
+        var collator = Intl.Collator(locale, {'sensitivity': sensitivity});
+        return function (haystack) {
+          for (var i = 0; i < 1 + haystack.length - term.length; i++) {
+            var first_part = haystack.slice(i, i + term.length);
+            if (collator.compare(first_part, term) === 0) {
+              return true;
+            }
+          }
+          return false;
+        };
       }
 
       function create_str_startswith(term) {
-        var strict = new RegExp( "^" + $.ui.autocomplete.escapeRegex( term ), "i" );
-        return strict.test.bind(strict);
+        var locale = context.settings['locale'];
+        var sensitivity = context.settings['sensitivity'];
+        var collator = Intl.Collator(locale, {'sensitivity': sensitivity});
+        return function (haystack) {
+          var first_part = haystack.slice(0, term.length);
+          return collator.compare(first_part, term) === 0;
+        };
       }
 
       // loose matching of search terms
