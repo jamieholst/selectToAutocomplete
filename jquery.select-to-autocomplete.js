@@ -179,6 +179,16 @@ THE SOFTWARE.
   
   var adapters = {
     jquery_ui: function( context ) {
+      function create_str_contains(term) {
+        var partial = new RegExp( $.ui.autocomplete.escapeRegex( term ), "i" );
+        return partial.test.bind(partial);
+      }
+
+      function create_str_startswith(term) {
+        var strict = new RegExp( "^" + $.ui.autocomplete.escapeRegex( term ), "i" );
+        return strict.test.bind(strict);
+      }
+
       // loose matching of search terms
       var filter_options = function( term ) {
         var split_term = term.split(' ');
@@ -186,11 +196,9 @@ THE SOFTWARE.
         for (var i=0; i < split_term.length; i++) {
           if ( split_term[i].length > 0 ) {
             var matcher = {};
-            var partial = new RegExp( $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
-            matcher['partial'] = partial.test.bind(partial);
+            matcher['partial'] = create_str_contains( split_term[i] );
             if ( context.settings['relevancy-sorting'] ) {
-              var strict = new RegExp( "^" + $.ui.autocomplete.escapeRegex( split_term[i] ), "i" );
-              matcher['strict'] = strict.test.bind(strict);
+              matcher['strict'] = create_str_startswith( split_term[i] );
             }
             matchers.push( matcher );
           }
