@@ -25,6 +25,7 @@ THE SOFTWARE.
 */
 (function($){
   var settings = {
+    'select-filtered-option-on-exit': false,
     'sort': false,
     'sort-attr': 'data-priority',
     'sort-desc': false,
@@ -46,7 +47,13 @@ THE SOFTWARE.
       if ( context.settings['remove-valueless-options'] ) {
         selected_finder = 'option:selected[value!=""]:first';
       }
-      context.$text_field.val( context.$select_field.find( selected_finder ).text() );
+      if (context.settings['select-filtered-option-on-exit'] && context.filtered_options) {
+          // select the first option in filtered_options
+          context.$text_field.val(context.filtered_options[0].label);
+      }
+      else {
+      	  context.$text_field.val( context.$select_field.find( selected_finder ).text() );
+      }
     },
     handle_select_field: function( $select_field ) {
       return $select_field.hide();
@@ -259,9 +266,9 @@ THE SOFTWARE.
         'delay': context.settings['delay'],
         'autoFocus': context.settings['autoFocus'],
         source: function( request, response ) {
-          var filtered_options = filter_options( request.term );
+          context.filtered_options = filter_options( request.term );
           if ( context.settings['relevancy-sorting'] ) {
-            filtered_options = filtered_options.sort( function( a, b ) { 
+            context.filtered_options = context.filtered_options.sort( function( a, b ) { 
             	if (b['relevancy-score'] == a['relevancy-score']) {
             		return b['label'] < a['label'] ? 1 : -1;	
             	} else {
@@ -269,7 +276,7 @@ THE SOFTWARE.
             	}
             } );
           }
-          response( filtered_options );
+          response( context.filtered_options );
         },
         select: function( event, ui ) {
           update_select_value( ui.item );
