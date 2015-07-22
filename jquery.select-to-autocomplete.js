@@ -25,7 +25,7 @@ THE SOFTWARE.
 */
 (function($){
   var settings = {
-    'select-filtered-option-on-blur': false,
+    'select-filtered-option-on-exit': false,
     'sort': false,
     'sort-attr': 'data-priority',
     'sort-desc': false,
@@ -47,7 +47,7 @@ THE SOFTWARE.
       if ( context.settings['remove-valueless-options'] ) {
         selected_finder = 'option:selected[value!=""]:first';
       }
-      if (context.settings['select-filtered-option-on-blur'] && context.filtered_options) {
+      if (context.settings['select-filtered-option-on-exit'] && context.filtered_options) {
           // select the first option in filtered_options
           context.$text_field.val(context.filtered_options[0].label);
       }
